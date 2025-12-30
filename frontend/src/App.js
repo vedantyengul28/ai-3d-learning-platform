@@ -4,6 +4,7 @@ import TopicInput from './components/TopicInput';
 import ContentDisplay from './components/ContentDisplay';
 import Avatar3D from './components/Avatar3D';
 import ProgressTracker from './components/ProgressTracker';
+import { API_BASE_URL } from './config';
 
 function App() {
   const [topic, setTopic] = useState('');
@@ -37,7 +38,7 @@ function App() {
 
   const fetchSessionData = async (sid) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/content/${sid}`);
+      const response = await fetch(`${API_BASE_URL}/api/content/${sid}`);
       if (response.ok) {
         const data = await response.json();
         if (data.chapters && Array.isArray(data.chapters)) {
@@ -72,7 +73,7 @@ function App() {
     localStorage.setItem('backCount', '0');
 
     try {
-      const response = await fetch('http://localhost:5000/api/content/generate', {
+      const response = await fetch(`${API_BASE_URL}/api/content/generate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -149,7 +150,7 @@ function App() {
     // Update backend
     if (sessionId) {
       try {
-        await fetch(`http://localhost:5000/api/session/${sessionId}/progress`, {
+        await fetch(`${API_BASE_URL}/api/session/${sessionId}/progress`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
